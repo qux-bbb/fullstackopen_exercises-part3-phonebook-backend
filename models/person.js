@@ -7,7 +7,7 @@ const url = process.env.MONGODB_URI
 console.log('connecting to', url)
 
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(result => {
+  .then(() => {
     console.log('connected to MongoDB')
   })
   .catch((error) => {
@@ -24,11 +24,11 @@ const personSchema = new mongoose.Schema({
   number: {
     type: String,
     validate: {
-      validator: function(v) {
-        tmpNumbers = v.match(/\d/g)
+      validator: function (v) {
+        let tmpNumbers = v.match(/\d/g)
         return tmpNumbers.length >= 8
       },
-      message: props => `Must contain at least 8 numbers`
+      message: () => 'Must contain at least 8 numbers'
     },
     required: true
   }
