@@ -17,11 +17,19 @@ mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
 const personSchema = new mongoose.Schema({
   name: {
     type: String,
+    minlength: 3,
     required: true,
     unique: true
   },
   number: {
     type: String,
+    validate: {
+      validator: function(v) {
+        tmpNumbers = v.match(/\d/g)
+        return tmpNumbers.length >= 8
+      },
+      message: props => `Must contain at least 8 numbers`
+    },
     required: true
   }
 })
